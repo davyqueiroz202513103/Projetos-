@@ -1,0 +1,72 @@
+# Loja de Música Online com Estatísticas
+
+
+
+musicas = [
+    {
+        "titulo": "Som da Vida",
+        "artista": "Banda Alpha",
+        "downloads": 1500,
+        "avaliacoes": [5, 4, 4, 5, 3, 5]
+    },
+    {
+        "titulo": "Ritmo da Noite",
+        "artista": "DJ Beta",
+        "downloads": 2000,
+        "avaliacoes": [4, 4, 5, 5, 4]
+    },
+    {
+        "titulo": "Melodia do Coração",
+        "artista": "Banda Alpha",
+        "downloads": 1800,
+        "avaliacoes": [3, 4, 5, 2, 4]
+    },
+    {
+        "titulo": "Batida Perfeita",
+        "artista": "MC Gama",
+        "downloads": 2200,
+        "avaliacoes": [5, 5, 5, 4, 5]
+    }
+]
+
+
+def media_avaliacoes(musicas):
+    medias = {}
+    for musica in musicas:
+        if len(musica["avaliacoes"]) > 0:
+            media = sum(musica["avaliacoes"]) / len(musica["avaliacoes"])
+        else:
+            media = 0
+        medias[musica["titulo"]] = media
+    return medias
+
+
+def artista_mais_downloads(musicas):
+    downloads_por_artista = {}
+    for musica in musicas:
+        artista = musica["artista"]
+        downloads_por_artista[artista] = downloads_por_artista.get(artista, 0) + musica["downloads"]
+
+    
+    mais_baixado = max(downloads_por_artista, key=downloads_por_artista.get)
+    return mais_baixado, downloads_por_artista[mais_baixado]
+
+
+def ranking_musicas(musicas):
+    ranking = []
+    for musica in musicas:
+        if len(musica["avaliacoes"]) > 0:
+            media = sum(musica["avaliacoes"]) / len(musica["avaliacoes"])
+        else:
+            media = 0
+        ranking.append((musica["titulo"], media))
+
+   
+    ranking.sort(key=lambda x: x[1], reverse=True)
+    return ranking
+
+
+
+print("Média de avaliações por música:", media_avaliacoes(musicas))
+print("Artista com mais downloads:", artista_mais_downloads(musicas))
+print("Ranking das músicas mais bem avaliadas:", ranking_musicas(musicas))
