@@ -1,0 +1,130 @@
+import time
+
+
+# 6️ Busca de Nome em Lista (Busca Linear)
+
+def busca_nome():
+    nomes = []
+
+    print("Digite nomes (ou 'sair' para terminar):")
+    while True:
+        nome = input("Nome: ").strip()
+        if nome.lower() == 'sair':
+            break
+        nomes.append(nome)
+
+    alvo = input("Digite o nome que deseja buscar: ").strip()
+
+    encontrado = False
+    for i in range(len(nomes)):
+        if nomes[i].lower() == alvo.lower():
+            print(f"O nome '{alvo}' foi encontrado no índice {i}.")
+            encontrado = True
+            break
+
+    if not encontrado:
+        print(f"O nome '{alvo}' não foi encontrado na lista.")
+
+
+
+# 7️ Busca Binária Recursiva
+
+def busca_binaria_recursiva(lista, alvo, inicio, fim):
+    if inicio > fim:
+        return -1
+
+    meio = (inicio + fim) // 2
+
+    if lista[meio] == alvo:
+        return meio
+    elif lista[meio] > alvo:
+        return busca_binaria_recursiva(lista, alvo, inicio, meio - 1)
+    else:
+        return busca_binaria_recursiva(lista, alvo, meio + 1, fim)
+
+
+
+# 8️ Comparar Tempo de Execução (Linear x Binária)
+
+def comparar_tempos():
+    lista = list(range(1_000_000))
+    alvo = 999_999
+
+    inicio = time.time()
+    
+    for i in range(len(lista)):
+        if lista[i] == alvo:
+            break
+    fim = time.time()
+    tempo_linear = fim - inicio
+
+    inicio = time.time()
+   
+    busca_binaria_recursiva(lista, alvo, 0, len(lista) - 1)
+    fim = time.time()
+    tempo_binaria = fim - inicio
+
+    print(f"Tempo Busca Linear: {tempo_linear:.6f} segundos")
+    print(f"Tempo Busca Binária: {tempo_binaria:.6f} segundos")
+
+
+
+# 9️ Primeira Ocorrência (Busca Binária Modificada)
+
+def primeira_ocorrencia(lista, alvo):
+    inicio = 0
+    fim = len(lista) - 1
+    resultado = -1
+
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            resultado = meio
+            fim = meio - 1  
+        elif lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+
+    return resultado
+
+
+
+# 10 Localizar Intervalo de Índices (Início e Fim)
+
+def intervalo_indices(lista, alvo):
+    primeiro = primeira_ocorrencia(lista, alvo)
+
+    if primeiro == -1:
+        return (-1, -1)
+
+    inicio = 0
+    fim = len(lista) - 1
+    ultimo = -1
+
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            ultimo = meio
+            inicio = meio + 1  
+        elif lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+
+    return (primeiro, ultimo)
+
+
+if __name__ == "__main__":
+    print("===== Testes das Funções de Busca =====\n")
+
+    
+    lista_exemplo = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    print("Busca Binária Recursiva:", busca_binaria_recursiva(lista_exemplo, 7, 0, len(lista_exemplo)-1))
+
+    comparar_tempos()
+
+    lista_repetida = [1, 2, 2, 2, 3, 4, 4, 5]
+    print("Primeira ocorrência do número 2:", primeira_ocorrencia(lista_repetida, 2))
+
+    print("Intervalo do número 2:", intervalo_indices(lista_repetida, 2))
