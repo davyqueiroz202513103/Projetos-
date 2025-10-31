@@ -1,0 +1,88 @@
+import random
+
+
+# 11 Busca em Lista de Dicionários
+
+def buscar_pessoa_por_nome(lista, nome):
+    """Busca linear por uma pessoa em uma lista de dicionários."""
+    for pessoa in lista:
+        if pessoa["nome"].lower() == nome.lower():
+            return f"Pessoa encontrada: Nome = {pessoa['nome']}, Idade = {pessoa['idade']}"
+    return f"Pessoa com nome '{nome}' não encontrada."
+
+
+# 12️ Jogo: Adivinhe o Número (Busca Binária)
+
+def jogo_adivinhe_numero():
+    """O computador tenta adivinhar o número escolhido pelo jogador."""
+    print("🎮 Bem-vindo ao jogo: Adivinhe o Número!")
+    print("Pense em um número entre 1 e 100...")
+
+    baixo = 1
+    alto = 100
+    tentativas = 0
+
+    while True:
+        palpite = (baixo + alto) // 2
+        tentativas += 1
+        print(f"Tentativa {tentativas}: O número é {palpite}?")
+        resposta = input("Digite (M)aior, (m)enor ou (C)orreto: ").lower()
+
+        if resposta == 'c':
+            print(f" Acertei em {tentativas} tentativas! O número era {palpite}.")
+            break
+        elif resposta == 'm':
+            alto = palpite - 1
+        elif resposta == 'M':
+            baixo = palpite + 1
+        else:
+            print("Resposta inválida! Digite apenas M, m ou C.")
+
+
+# 13️ Buscar Produtos por Preço
+
+def buscar_produtos_por_preco(lista_produtos, preco_alvo):
+    """Busca linear para encontrar produtos com preço específico."""
+    encontrados = []
+    for produto in lista_produtos:
+        if produto["preco"] == preco_alvo:
+            encontrados.append(produto["nome"])
+
+    if encontrados:
+        return f"Produtos com preço {preco_alvo}: {', '.join(encontrados)}"
+    else:
+        return f"Nenhum produto encontrado com o preço {preco_alvo}."
+
+
+
+# 14️ Implementar sua própria função index()
+def meu_index(lista, valor):
+    """Funciona como list.index(), usando busca sequencial."""
+    for i in range(len(lista)):
+        if lista[i] == valor:
+            return i
+    return -1
+
+
+if __name__ == "__main__":
+    print("===== Testes das Funções de Busca =====\n")
+
+    pessoas = [
+        {"nome": "Ana", "idade": 25},
+        {"nome": "João", "idade": 30},
+        {"nome": "Maria", "idade": 22}
+    ]
+    print(buscar_pessoa_por_nome(pessoas, "João"))
+    print(buscar_pessoa_por_nome(pessoas, "Carlos"))
+
+    produtos = [
+        {"nome": "Teclado", "preco": 100},
+        {"nome": "Mouse", "preco": 80},
+        {"nome": "Monitor", "preco": 100},
+    ]
+    print(buscar_produtos_por_preco(produtos, 100))
+    print(buscar_produtos_por_preco(produtos, 200))
+
+    lista_exemplo = [10, 20, 30, 40, 50]
+    print(f"O índice do número 30 é: {meu_index(lista_exemplo, 30)}")
+    print(f"O índice do número 99 é: {meu_index(lista_exemplo, 99)}")
