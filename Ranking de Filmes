@@ -1,0 +1,81 @@
+filmes = [
+    {
+        "titulo": "Aventura Espacial",
+        "diretor": "James Nova",
+        "bilheteria": 2500,  
+        "avaliacoes": [9, 8, 10, 9, 7, 10]
+    },
+    {
+        "titulo": "Mistério na Ilha",
+        "diretor": "Laura Sol",
+        "bilheteria": 1800,
+        "avaliacoes": [7, 8, 8, 9, 7]
+    },
+    {
+        "titulo": "Heróis do Futuro",
+        "diretor": "James Nova",
+        "bilheteria": 3000,
+        "avaliacoes": [10, 9, 10, 8, 9, 9]
+    },
+    {
+        "titulo": "Romance em Paris",
+        "diretor": "Clara Luz",
+        "bilheteria": 900,
+        "avaliacoes": [8, 7, 7, 8, 8]
+    },
+    {
+        "titulo": "A Lenda do Dragão",
+        "diretor": "Lucas Fogo",
+        "bilheteria": 2200,
+        "avaliacoes": [9, 9, 8, 9, 10]
+    }
+]
+
+
+def top_bilheteria(filmes):
+    return sorted(filmes, key=lambda x: x["bilheteria"], reverse=True)[:3]
+
+
+def top_avaliacao(filmes):
+    medias = []
+    for filme in filmes:
+        media = sum(filme["avaliacoes"]) / len(filme["avaliacoes"])
+        medias.append((filme["titulo"], media))
+    return sorted(medias, key=lambda x: x[1], reverse=True)[:3]
+
+
+def bilheteria_por_diretor(filmes):
+    resultado = {}
+    for filme in filmes:
+        diretor = filme["diretor"]
+        resultado[diretor] = resultado.get(diretor, 0) + filme["bilheteria"]
+    return resultado
+
+def campeao(filmes):
+    melhor = None
+    melhor_score = -1
+    for filme in filmes:
+        media = sum(filme["avaliacoes"]) / len(filme["avaliacoes"])
+        score = filme["bilheteria"] * media
+        if score > melhor_score:
+            melhor_score = score
+            melhor = (filme["titulo"], media, filme["bilheteria"], score)
+    return melhor
+
+
+
+print("Top 3 bilheteiras:")
+for f in top_bilheteria(filmes):
+    print(f" - {f['titulo']} (${f['bilheteria']} milhões)")
+
+print("\nTop 3 melhores avaliados:")
+for titulo, media in top_avaliacao(filmes):
+    print(f" - {titulo} (nota média {media:.2f})")
+
+print("\nBilheteria por diretor:")
+print(bilheteria_por_diretor(filmes))
+
+print("\nCampeão absoluto (melhor combinação bilheteria + avaliação):")
+campeao_filme = campeao(filmes)
+print(f" - {campeao_filme[0]} | Nota média: {campeao_filme[1]:.2f} | "
+      f"Bilheteria: ${campeao_filme[2]}M | Score: {campeao_filme[3]:.2f}")
