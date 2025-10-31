@@ -1,0 +1,60 @@
+# dicionario de Academia e Desempenho dos Atletas
+
+atletas = [
+    {
+        "nome": "Carlos",
+        "idade": 25,
+        "modalidades": ["Futebol", "Natação", "Corrida"],
+        "treinos": {"Futebol": 12, "Natação": 8, "Corrida": 15}
+    },
+    {
+        "nome": "Mariana",
+        "idade": 22,
+        "modalidades": ["Vôlei", "Natação"],
+        "treinos": {"Vôlei": 20, "Natação": 10}
+    },
+    {
+        "nome": "João",
+        "idade": 28,
+        "modalidades": ["Futebol", "Basquete"],
+        "treinos": {"Futebol": 18, "Basquete": 12}
+    },
+    {
+        "nome": "Ana",
+        "idade": 19,
+        "modalidades": ["Corrida", "Natação", "Yoga", "Ciclismo"],
+        "treinos": {"Corrida": 25, "Natação": 5, "Yoga": 7, "Ciclismo": 10}
+    }
+]
+
+
+def media_idade_por_esporte(atletas, esporte):
+    idades = []
+    for atleta in atletas:
+        if esporte in atleta["modalidades"]:
+            idades.append(atleta["idade"])
+    if len(idades) == 0:
+        return None  
+    return sum(idades) / len(idades)
+
+
+def esporte_mais_treinado(atletas, nome_atleta):
+    for atleta in atletas:
+        if atleta["nome"] == nome_atleta:
+            
+            return max(atleta["treinos"], key=atleta["treinos"].get)
+    return None  
+
+
+def atletas_multiesporte(atletas):
+    lista = []
+    for atleta in atletas:
+        if len(atleta["modalidades"]) > 2:
+            lista.append(atleta["nome"])
+    return lista
+
+
+
+print("Média de idade (Natação):", media_idade_por_esporte(atletas, "Natação"))
+print("Esporte mais treinado por Carlos:", esporte_mais_treinado(atletas, "Carlos"))
+print("Atletas com mais de 2 modalidades:", atletas_multiesporte(atletas))
