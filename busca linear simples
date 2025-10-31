@@ -1,0 +1,70 @@
+# 1 Busca Linear Simples
+
+def busca_linear(lista, alvo):
+    """Retorna o índice do número alvo, se encontrado."""
+    for i in range(len(lista)):
+        if lista[i] == alvo:
+            return f"Número {alvo} encontrado no índice {i}"
+    return f"Número {alvo} não encontrado"
+
+# 2️ Contar Ocorrências (Busca Linear)
+
+def contar_ocorrencias(lista, alvo):
+    """Conta quantas vezes o número alvo aparece na lista."""
+    cont = 0
+    for i in lista:
+        if i == alvo:
+            cont += 1
+    return f"O número {alvo} aparece {cont} vez(es) na lista."
+
+# 3️ Maior Número (Busca Linear)
+
+def maior_numero(lista):
+    """Encontra o maior número da lista."""
+    if not lista:
+        return "Lista vazia!"
+    maior = lista[0]
+    for i in lista:
+        if i > maior:
+            maior = i
+    return f"O maior número é {maior}"
+
+# 4️ Menor Número (Busca Linear)
+
+def menor_numero(lista):
+    """Encontra o menor número da lista."""
+    if not lista:
+        return "Lista vazia!"
+    menor = lista[0]
+    for i in lista:
+        if i < menor:
+            menor = i
+    return f"O menor número é {menor}"
+
+# 5️ Verificar Elemento (Busca Binária)
+
+def busca_binaria(lista, alvo):
+    """Verifica se o elemento existe em uma lista ORDENADA."""
+    inicio = 0
+    fim = len(lista) - 1
+
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            return f"Elemento {alvo} encontrado no índice {meio}"
+        elif lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+    return f"Elemento {alvo} não encontrado"
+
+if __name__ == "__main__":
+    valores = [10, 25, 7, 30, 15]
+    print(busca_linear(valores, 30))
+    print(contar_ocorrencias([5, 3, 7, 5, 2, 5], 5))
+    print(maior_numero(valores))
+    print(menor_numero(valores))
+
+    ordenada = [2, 4, 6, 8, 10, 12, 14]
+    print(busca_binaria(ordenada, 10))
+    print(busca_binaria(ordenada, 5))
